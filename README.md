@@ -1,0 +1,100 @@
+<!-- Task 1: Get All Books (HTML + CSS + JS) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get All Books</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            background: #e9e9e9;
+            margin-bottom: 8px;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Available Books</h1>
+        <button onclick="getAllBooks()">Load Books</button>
+        <ul id="book-list"></ul>
+    </div>
+
+    <script>
+        async function getAllBooks() {
+            try {
+                // Replace this URL with your real API URL
+                const response = await fetch('http://localhost:3000/books');
+                const books = await response.json();
+
+                const bookList = document.getElementById('book-list');
+                bookList.innerHTML = '';
+
+                books.forEach(book => {
+                    const li = document.createElement('li');
+                    li.textContent = `${book.id} - ${book.title} by ${book.author}`;
+                    bookList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error fetching books:', error);
+            }
+        }
+    </script>
+</body>
+</html>
+// Example code to fetch and display all books (Task 1)
+// Save this file as getallbooks.js or include inside a <script> tag in your HTML.
+
+async function getAllBooks() {
+    try {
+        // Sample API endpoint (replace with your actual backend route)
+        const response = await fetch('http://localhost:3000/books');
+        const books = await response.json();
+
+        const bookList = document.getElementById('book-list');
+        bookList.innerHTML = '';
+
+        books.forEach(book => {
+            const li = document.createElement('li');
+            li.textContent = `${book.id} - ${book.title} by ${book.author}`;
+            bookList.appendChild(li);
+        });
+    } catch (error) {
+        console.error('Error fetching books:', error);
+    }
+}
+
+// Call the function on page load
+window.onload = getAllBooks;
